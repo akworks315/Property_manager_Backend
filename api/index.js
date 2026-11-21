@@ -14,11 +14,15 @@ async function connect() {
 }
 
 module.exports = async (req, res) => {
-  try {
-    await connect();
-  } catch (e) {
-    console.error('MongoDB connection failed:', e.message);
-    return res.status(500).json({ message: 'Database connection failed' });
+  // CORS preflight does not need the database
+  if (req.method !== 'OPTIONS') {
+    try {
+      await connect();
+    } catch (e) {
+      console.error('MongoDB connection failed:', e.message);
+      if (req.headers.origin) res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+      return res.status(500).json({ message: 'Database connection failed' });
+    }
   }
   return app(req, res);
 };
