@@ -6,7 +6,7 @@ const app = express();
 
 // Allowed frontends: built-in defaults + anything listed in CLIENT_URL (comma separated)
 const defaults = [
-  'https://property-manager-frontend-seven.vercel.app/login',
+  'https://property-manager-frontend-seven.vercel.app/',
   'http://localhost:5173',
 ];
 const fromEnv = (process.env.CLIENT_URL || '').split(',').map((s) => s.trim().replace(/\/$/, '')).filter(Boolean);
